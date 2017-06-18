@@ -1,0 +1,37 @@
+{
+  "name": "zgldh/module-upload",
+  "description": "Upload Module for zgldh/scaffold",
+  "keywords": [
+    "laravel",
+    "scaffold",
+    "tag"
+  ],
+  "license": "MIT",
+  "require": {
+    "zgldh/scaffold": ">0.2",
+    "zgldh/laravel-upload-manager": "^0.4.3"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "classmap": [
+    ],
+    "psr-4": {
+      "zgldh\\ModuleUpload\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+    ]
+  },
+  "scripts": {
+    "post-root-package-install": [
+    ],
+    "post-create-project-cmd": [
+    ],
+    "post-install-cmd": [
+    ],
+    "post-update-cmd": [
+    ]
+  }
+}

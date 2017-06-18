@@ -1,0 +1,107 @@
+{
+  "namespace": "WoXuanWang\\Upload",
+  "name": "上传内容",
+  "middleware": "auth",
+  "table": "uploads",
+  "fields": [
+    {
+      "name": "id",
+      "htmlLabel": "ID",
+      "dbType": "increments",
+      "htmlType": "",
+      "validations": "",
+      "searchable": false,
+      "fillable": false,
+      "primary": true,
+      "inForm": false,
+      "inIndex": false
+    },
+    {
+      "name": "name",
+      "htmlLabel": "名字",
+      "dbType": "string:nullable:index",
+      "htmlType": "text",
+      "validations": "",
+      "searchable": true
+    },
+    {
+      "name": "description",
+      "htmlLabel": "描述",
+      "dbType": "string:nullable:index",
+      "htmlType": "text",
+      "validations": "",
+      "searchable": true
+    },
+    {
+      "name": "disk",
+      "htmlLabel": "位置",
+      "dbType": "string",
+      "htmlType": "text",
+      "validations": "required",
+      "searchable": false
+    },
+    {
+      "name": "path",
+      "htmlLabel": "路径",
+      "dbType": "string",
+      "htmlType": "text",
+      "validations": "required",
+      "inForm": false,
+      "inIndex": false,
+      "searchable": true
+    },
+    {
+      "name": "size",
+      "htmlLabel": "大小",
+      "dbType": "integer:default(0)",
+      "htmlType": "text",
+      "inForm": false,
+      "searchable": false
+    },
+    {
+      "name": "user_id",
+      "htmlLabel": "用户",
+      "dbType": "integer:unsigned:nullable:index",
+      "htmlType": "select",
+      "relation": "mt1,User,user_id,id",
+      "inIndex": false,
+      "inForm": false
+    },
+    {
+      "name": "uploadable_id",
+      "htmlLabel": "多态ID",
+      "dbType": "integer:unsigned:nullable:index",
+      "inIndex": false,
+      "inForm": false
+    },
+    {
+      "name": "uploadable_type",
+      "htmlLabel": "多态类型",
+      "dbType": "string:nullable:index",
+      "inIndex": false,
+      "inForm": false
+    },
+    {
+      "name": "created_at",
+      "dbType": "timestamp",
+      "htmlType": "",
+      "validations": "",
+      "searchable": false,
+      "fillable": false,
+      "primary": false,
+      "inForm": false,
+      "inIndex": false
+    },
+    {
+      "name": "updated_at",
+      "dbType": "timestamp",
+      "htmlType": "",
+      "validations": "",
+      "searchable": false,
+      "fillable": false,
+      "primary": false,
+      "inForm": false,
+      "inIndex": false
+    }
+  ]
+}
