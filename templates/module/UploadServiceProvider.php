@@ -14,6 +14,7 @@ class UploadServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        parent::register();
     }
 
     /**
