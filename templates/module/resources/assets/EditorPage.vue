@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="admin-editor-page">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>上传内容管理
-        <small v-if="item.id">编辑上传内容</small>
+        <small v-if="form.id">编辑上传内容</small>
         <small v-else>新建上传内容</small>
       </h1>
       <ol class="breadcrumb">
@@ -13,10 +13,61 @@
         <li>
           <router-link to="/upload">上传内容管理</router-link>
         </li>
-        <li class="active" v-if="item.id">编辑上传内容</li>
+        <li class="active" v-if="form.id">编辑上传内容</li>
         <li class="active" v-else>新建上传内容</li>
       </ol>
     </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="box box-default">
+
+        <div class="box-header with-border">
+          <el-button type="default" @click="onCancel" icon="close">返回</el-button>
+          <el-button type="primary" @click="onSave" icon="check" :loading="saving||loading">
+            保存
+          </el-button>
+        </div>
+        <!-- /.box-header -->
+
+        <!-- form start -->
+        <div class="box-body">
+          <el-alert class="missing-errors" v-if="missingErrors.length" v-for="errorMessage in missingErrors"
+                    :key="errorMessage"
+                    :title="errorMessage" type="error" show-icon></el-alert>
+
+          <!-- form start -->
+          <el-form ref="form" :model="form" label-width="200px" v-loading="loading">
+            <el-form-item label="ID" v-if="form.id">
+              <el-input v-model="form.id" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="Name" prop="name" :error="errors.name">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="Description" prop="description" :error="errors.description">
+              <el-input v-model="form.description"></el-input>
+            </el-form-item>
+            //TODO file upload
+            <el-form-item label="Created At" v-if="form.id">
+              <el-input v-model="form.created_at" disabled></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+          <el-button type="default" @click="onCancel" icon="close">返回</el-button>
+          <el-button type="primary" @click="onSave" icon="check" :loading="saving||loading">
+            保存
+          </el-button>
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /.content -->
+
 
     <!-- Main content -->
     <section class="content">
@@ -30,26 +81,26 @@
 
           <form class="form-horizontal" @submit="onSave">
 
-            <div class="form-group" :class="{'has-error': item.$errors.has('name')}">
+            <div class="form-group" :class="{'has-error': form.$errors.has('name')}">
               <label for="field-name" class="col-sm-2 control-label">名字</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="field-name" v-model="item.name">
-                <span class="help-block" v-if="item.$errors.has('name')">{{item.$errors.get('name')}}</span>
+                <input type="text" class="form-control" id="field-name" v-model="form.name">
+                <span class="help-block" v-if="form.$errors.has('name')">{{form.$errors.get('name')}}</span>
               </div>
             </div>
-            <div class="form-group" :class="{'has-error': item.$errors.has('description')}">
+            <div class="form-group" :class="{'has-error': form.$errors.has('description')}">
               <label for="field-description" class="col-sm-2 control-label">描述</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="field-description" v-model="item.description">
+                <input type="text" class="form-control" id="field-description" v-model="form.description">
                 <span class="help-block"
-                      v-if="item.$errors.has('description')">{{item.$errors.get('description')}}</span>
+                      v-if="form.$errors.has('description')">{{form.$errors.get('description')}}</span>
               </div>
             </div>
-            <div class="form-group" :class="{'has-error': item.$errors.has('file')}">
+            <div class="form-group" :class="{'has-error': form.$errors.has('file')}">
               <label for="field-file" class="col-sm-2 control-label">文件</label>
               <div class="col-sm-10">
                 <input type="file" class="form-control" id="field-file" v-on:change="onFileChange" name="file">
-                <span class="help-block" v-if="item.$errors.has('file')">{{item.$errors.get('file')}}</span>
+                <span class="help-block" v-if="form.$errors.has('file')">{{form.$errors.get('file')}}</span>
               </div>
             </div>
 
@@ -73,92 +124,54 @@
 </template>
 
 <script type="javascript">
-  import {Vue} from 'resources/assets/js/commons/vuejs.js';
-  import {alert} from 'resources/assets/js/components/SweetAlertDialogs';
-  import ErrorsBuilder from 'resources/assets/js/commons/ErrorsBuilder.js';
+  import {mixin} from "resources/assets/js/commons/EditorHelper.js";
 
-  var resourceURL = "/upload";
-  var resource = Vue.resource(resourceURL + '{/id}');
-  var vueConfig = {
+  export default  {
+    mixins: [mixin],
     data: function () {
       return {
-        item: {
-          "id": null,
-          "name": "",
-          "description": "",
-          "disk": "upload",
-          "path": "",
-          "size": null,
-          "user_id": null,
-          "uploadable_id": null,
-          "uploadable_type": "",
-          "file": null,
-          $errors: ErrorsBuilder()
-        },
-        saving: false,
+        form: {
+          id: null,
+          name: '',
+          description: '',
+        }
       };
     },
-    beforeRouteEnter (to, from, next) {
-      if (to.params.id) {
-        resource.get({id: to.params.id}).then(function (result) {
-          next(function (vm) {
-            vm.item = result.data.data;
-            vm.item.$errors = ErrorsBuilder();
-          })
-        }).catch(function (err) {
-          next(false);
-        });
-      }
-      else {
-        next();
+    components: {},
+    computed: {
+      resource: function () {
+        var resourceURL = '/upload';
+        return (this.form.id ? resourceURL + '/' + this.form.id : resourceURL);// + '?_with=roles,permissions';
       }
     },
+    created: function () {
+      this.loading = true;
+      let loads = [];
+      if (this.$route.params.id) {
+        this.form.id = this.$route.params.id;
+        loads.push(axios.get(this.resource));
+      }
+
+      Promise.all(loads).then(results => {
+        this.form = results[0].data.data;
+        this.loading = false;
+      }).catch(err => {
+        this.loading = false;
+      });
+    },
     methods: {
-      onFileChange: function (val) {
-        this.item[val.target.attributes.item('name').value] = val.target.files[0];
-      },
       onSave: function (event) {
-        this.saving = true;
-        this.item.$errors.removeAll();
-
-        var promise = null;
-        let payload = $.extend(true, {}, this.item);
-        if (payload.id) {
-          promise = resource.update({id: payload.id}, payload).then(function (result) {
-            window.toastr["success"]("编辑已保存");
-            return result.data.data;
-          });
-        }
-        else {
-          promise = resource.save(payload).then(function (result) {
-            window.toastr["success"]("新增成功");
-            return result.data.data;
-          });
-        }
-
-        promise.then(function (data) {
-          return resource.get({id: data.id});
-        }).then(function (result) {
-          this.saving = false;
-          this.item = result.data.data;
-          this.item.$errors = ErrorsBuilder();
-        }.bind(this)).catch(function (err) {
-          this.saving = false;
-          if (err.status == 422) {
-            this.item.$errors.setAll(err.body);
-            this.item.$errors.focusFirstErrorField();
-          }
-          else {
-            alert(err.data.message);
-          }
-        }.bind(this));
-
-        return false;
+        this._onSave(event).then(result => {
+          this.$router.replace('/upload/' + result.data.data.id + '/edit');
+          this.form = result.data.data;
+          this.form.permissions = this.form.permissions.map(permission => permission.id);
+        });
+      },
+      onCancel: function (event) {
+        this.$router.back();
       },
     }
   };
-  export default vueConfig;
-
 </script>
 
 <style lang="scss">

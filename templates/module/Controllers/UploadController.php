@@ -1,14 +1,12 @@
-<?php namespace WoXuanWang\Upload\Controllers;
+<?php namespace $NAME$\Upload\Controllers;
 
+use $NAME$\ActionLog\Repositories\ActionLogRepository;
+use $NAME$\Upload\Requests\CreateUploadRequest;
+use $NAME$\Upload\Requests\UpdateUploadRequest;
+use $NAME$\Upload\Repositories\UploadRepository;
 use App\Http\Requests\IndexRequest;
 use App\Http\Requests\ShowRequest;
-use WoXuanWang\ActionLog\Repositories\ActionLogRepository;
-use WoXuanWang\Upload\Requests\CreateUploadRequest;
-use WoXuanWang\Upload\Requests\UpdateUploadRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use WoXuanWang\Upload\Repositories\UploadRepository;
-use Yajra\Datatables\Facades\Datatables;
 use zgldh\Scaffold\AppBaseController;
 
 class UploadController extends AppBaseController
@@ -33,8 +31,7 @@ class UploadController extends AppBaseController
             $data = $this->repository->datatables(null, $with);
             return $data;
         } else {
-            ActionLogRepository::log("查看", "上传内容(upload):", \Auth::user());
-            return view('WoXuanWang\Upload::index');
+            return view('$NAME$\Upload::index');
         }
     }
 
@@ -50,7 +47,6 @@ class UploadController extends AppBaseController
         $input['user_id'] = $request->user()->id;
 
         $upload = $this->repository->create($input);
-        ActionLogRepository::log("新增", "上传内容(upload):" . $upload->id, \Auth::user());
         return $this->sendResponse($upload, 'Upload saved successfully.');
     }
 
@@ -83,7 +79,6 @@ class UploadController extends AppBaseController
      */
     public function update($id, UpdateUploadRequest $request)
     {
-        ActionLogRepository::log("编辑", "上传内容(upload):" . $id, \Auth::user());
         $upload = $this->repository->findWithoutFail($id);
 
         if (empty($upload)) {
@@ -105,7 +100,6 @@ class UploadController extends AppBaseController
      */
     public function destroy($id)
     {
-        ActionLogRepository::log("删除", "上传内容(upload):" . $id, \Auth::user());
         $upload = $this->repository->findWithoutFail($id);
 
         if (empty($upload)) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace WoXuanWang\Upload\Repositories;
+namespace $NAME$\Upload\Repositories;
 
-use WoXuanWang\Upload\Models\Upload;
+use $NAME$\Upload\Models\Upload;
 use zgldh\Scaffold\BaseRepository;
 use zgldh\UploadManager\UploadException;
 use zgldh\UploadManager\UploadManager;

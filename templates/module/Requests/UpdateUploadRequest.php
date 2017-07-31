@@ -1,9 +1,9 @@
 <?php
 
-namespace WoXuanWang\Upload\Requests;
+namespace $NAME$\Upload\Requests;
 
+use $NAME$\Upload\Models\Upload;
 use Illuminate\Foundation\Http\FormRequest;
-use WoXuanWang\Upload\Models\Upload;
 
 class UpdateUploadRequest extends FormRequest
 {

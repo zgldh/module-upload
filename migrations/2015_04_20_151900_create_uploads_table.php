@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUploadsTableZgldh extends Migration
+class CreateUploadsTable extends Migration
 {
 
     /**
@@ -15,12 +15,12 @@ class CreateUploadsTableZgldh extends Migration
     {
         Schema::create('uploads', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('description')->nullable();
-            $table->string('disk');
-            $table->string('path');
-            $table->integer('size');
-            $table->integer('user_id')->nullable();
+            $table->string('name')->defalut('');
+            $table->string('description')->default('');
+            $table->string('disk')->default('');
+            $table->string('path')->default('');
+            $table->integer('size')->default(0);
+            $table->integer('user_id')->default(0)->index();
             $table->integer('uploadable_id')->nullable();
             $table->string('uploadable_type')->nullable();
 
@@ -29,7 +29,7 @@ class CreateUploadsTableZgldh extends Migration
             $table->index([
                 'uploadable_id',
                 'uploadable_type'
-            ],'uploadable_index');
+            ], 'uploadable_index');
         });
     }
 

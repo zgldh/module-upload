@@ -1,6 +1,6 @@
-<?php namespace WoXuanWang\Upload;
+<?php namespace $NAME$\Upload;
 
-use WoXuanWang\Upload\Models\Upload;
+use $NAME$\Upload\Models\Upload;
 use Illuminate\Support\ServiceProvider;
 
 class UploadServiceProvider extends ServiceProvider
@@ -33,6 +33,6 @@ class UploadServiceProvider extends ServiceProvider
         );
 
         $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views',
-            'WoXuanWang\Upload');
+            '$NAME$\Upload');
     }
 }

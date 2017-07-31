@@ -1,4 +1,4 @@
-<?php namespace WoXuanWang\Upload;
+<?php namespace $NAME$\Upload;
 
 use zgldh\UploadManager\UploadStrategy as BaseStrategy;
 

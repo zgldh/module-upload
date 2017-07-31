@@ -1,12 +1,12 @@
-<?php namespace WoXuanWang\Upload\Models;
+<?php namespace $NAME$\Upload\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use zgldh\QiniuStorage\QiniuStorage;
 use zgldh\UploadManager\UploadManager;
 
 /**
  * Class Upload
- * @package WoXuanWang\Upload\Models
+ * @package $NAME$\Upload\Models
  * @version December 13, 2016, 7:30 am UTC
  */
 class Upload extends Model
@@ -54,7 +54,7 @@ class Upload extends Model
      **/
     public function user()
     {
-        return $this->belongsTo(\WoXuanWang\User\Models\User::class, 'user_id', 'id');
+        return $this->belongsTo(\$NAME$\User\Models\User::class, 'user_id', 'id');
     }
 
     public function uploadable()
@@ -64,7 +64,7 @@ class Upload extends Model
 
     public function getUrlAttribute()
     {
-        if ($this->disk === 'qiniu-resources'){
+        if ($this->disk === 'qiniu-resources') {
             $disk = QiniuStorage::disk($this->disk);
             $url = (string)$disk->downloadUrl($this->path);
         } else if (str_contains($this->disk, 'qiniu')) {

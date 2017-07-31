@@ -1,4 +1,3 @@
 <?php
-
-Route::post('upload/bundle','\WoXuanWang\Upload\Controllers\UploadController@bundle');
-Route::resource('upload', '\WoXuanWang\Upload\Controllers\UploadController');
+Route::post('upload/bundle', '\$NAME$\Upload\Controllers\UploadController@bundle');
+Route::resource('upload', '\$NAME$\Upload\Controllers\UploadController');
