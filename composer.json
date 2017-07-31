@@ -4,10 +4,11 @@
   "keywords": [
     "laravel",
     "scaffold",
-    "tag"
+    "upload"
   ],
   "license": "MIT",
   "require": {
+    "zgldh/scaffold": "dev-master",
     "zgldh/laravel-upload-manager": "~0.4.3"
   },
   "require-dev": {
