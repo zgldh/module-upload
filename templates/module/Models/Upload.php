@@ -16,7 +16,10 @@ class Upload extends Model
         'name',
         'description',
         'disk',
-        'user_id'
+        'path',
+        'size',
+        'type',
+        'user_id',
     ];
 
     /**
@@ -30,6 +33,7 @@ class Upload extends Model
         'disk'            => 'string',
         'path'            => 'string',
         'size'            => 'integer',
+        'type'            => 'string',
         'user_id'         => 'integer',
         'uploadable_id'   => 'integer',
         'uploadable_type' => 'string'

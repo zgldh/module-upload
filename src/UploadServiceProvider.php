@@ -1,6 +1,7 @@
 <?php namespace zgldh\ModuleUpload;
 
 use Illuminate\Support\ServiceProvider;
+use zgldh\UploadManager\UploadManagerServiceProvider;
 
 /**
  * Created by PhpStorm.
@@ -18,6 +19,7 @@ class UploadServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(UploadManagerServiceProvider::class);
     }
 
     /**

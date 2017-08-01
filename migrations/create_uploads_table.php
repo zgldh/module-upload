@@ -20,6 +20,7 @@ class CreateUploadsTable extends Migration
             $table->string('disk')->default('');
             $table->string('path')->default('');
             $table->integer('size')->default(0);
+            $table->string('type')->default('');
             $table->integer('user_id')->default(0)->index();
             $table->integer('uploadable_id')->nullable();
             $table->string('uploadable_type')->nullable();

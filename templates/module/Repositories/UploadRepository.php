@@ -38,7 +38,8 @@ class UploadRepository extends BaseRepository
         }
 
         $upload->name = @$attributes['name'] ?: $attributes['file']->getClientOriginalName();
-        $upload->description = @$attributes['description'];
+        $upload->description = @$attributes['description'] ?: '';
+        $upload->type = @$attributes['type'] ?: '';
         $upload->user_id = $attributes['user_id'];
         $upload->save();
         return $upload;

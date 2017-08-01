@@ -15,7 +15,7 @@ class UploadController extends AppBaseController
     public function __construct(UploadRepository $uploadRepo)
     {
         $this->repository = $uploadRepo;
-        $this->middleware('auth:admin');
+        $this->middleware('auth');
     }
 
     /**

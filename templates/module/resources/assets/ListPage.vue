@@ -37,6 +37,9 @@
                 <el-input v-model="searchForm.description" placeholder="Description" column="description"
                           operator="like"></el-input>
               </el-form-item>
+              <el-form-item label="Type">
+                <el-input v-model="searchForm.type" placeholder="Type" column="type" operator="like"></el-input>
+              </el-form-item>
               <el-form-item label="Disk">
                 <el-input v-model="searchForm.disk" placeholder="Disk" column="disk" operator="like"></el-input>
               </el-form-item>
@@ -123,6 +126,12 @@
               <el-table-column
                       prop="description"
                       label="Description"
+                      sortable="custom"
+                      show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column
+                      prop="type"
+                      label="Type"
                       sortable="custom"
                       show-overflow-tooltip>
               </el-table-column>
@@ -230,6 +239,6 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>
