@@ -33,15 +33,12 @@
               <el-form-item label="Name">
                 <el-input v-model="searchForm.name" placeholder="Name" column="name" operator="like"></el-input>
               </el-form-item>
-              <el-form-item label="Email">
-                <el-input v-model="searchForm.email" placeholder="Email" column="email" operator="like"></el-input>
+              <el-form-item label="Description">
+                <el-input v-model="searchForm.description" placeholder="Description" column="description"
+                          operator="like"></el-input>
               </el-form-item>
-              <el-form-item label="Is Active">
-                <el-select v-model="searchForm.is_active" placeholder="Select..." clearable
-                           column="is_active" operator="=">
-                  <el-option label="Active" value="1"></el-option>
-                  <el-option label="Inactive" value="0"></el-option>
-                </el-select>
+              <el-form-item label="Disk">
+                <el-input v-model="searchForm.disk" placeholder="Disk" column="disk" operator="like"></el-input>
               </el-form-item>
               <el-form-item label="Created At">
                 <el-date-picker
@@ -167,7 +164,6 @@
         <!-- /.box-body -->
 
         <div class="box-footer">
-          <el-button type="primary" @click="onCreate" icon="plus">添加用户</el-button>
           <el-button type="danger" @click="onBundleDelete" icon="delete" :disabled="selectedItems.length==0">
             批量删除
           </el-button>
@@ -192,8 +188,8 @@
         },
         searchForm: {
           name: null,
-          email: null,
-          is_active: null,
+          description: null,
+          disk: null,
           created_at: null
         }
       };

@@ -9,15 +9,9 @@ class UploadStrategy extends BaseStrategy
      * @param $path
      * @return string
      */
-    public function getUploadUrl($path)
+    public function getPublicUrl($path)
     {
-        $url = url('u/' . $path);
-        return $url;
-    }
-
-    public function getQiniuResourcesUrl($path)
-    {
-        $url = 'http://' . trim(config('filesystems.disks.qiniu-resources.domains.default'), '/') . '/' . trim($path, '/');
+        $url = url('storage/' . $path);
         return $url;
     }
 }

@@ -1,7 +1,6 @@
 <?php namespace $NAME$\Upload\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use zgldh\QiniuStorage\QiniuStorage;
 use zgldh\UploadManager\UploadManager;
 
 /**
@@ -64,16 +63,8 @@ class Upload extends Model
 
     public function getUrlAttribute()
     {
-        if ($this->disk === 'qiniu-resources') {
-            $disk = QiniuStorage::disk($this->disk);
-            $url = (string)$disk->downloadUrl($this->path);
-        } else if (str_contains($this->disk, 'qiniu')) {
-            $disk = QiniuStorage::disk($this->disk);
-            $url = (string)$disk->privateDownloadUrl($this->path);
-        } else {
-            $manager = UploadManager::getInstance();
-            $url = $manager->getUploadUrl($this->disk, $this->path);
-        }
+        $manager = UploadManager::getInstance();
+        $url = $manager->getUploadUrl($this->disk, $this->path);
         return $url;
     }
 

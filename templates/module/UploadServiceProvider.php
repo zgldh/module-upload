@@ -1,9 +1,8 @@
 <?php namespace $NAME$\Upload;
 
 use $NAME$\Upload\Models\Upload;
-use Illuminate\Support\ServiceProvider;
 
-class UploadServiceProvider extends ServiceProvider
+class UploadServiceProvider extends \zgldh\ModuleUpload\UploadServiceProvider
 {
 
     /**
@@ -25,6 +24,9 @@ class UploadServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views',
+            '$NAME$\Upload');
+
         Upload::deleted(
             function ($upload) {
                 //
@@ -32,7 +34,5 @@ class UploadServiceProvider extends ServiceProvider
             }
         );
 
-        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views',
-            '$NAME$\Upload');
     }
 }
