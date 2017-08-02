@@ -59,6 +59,16 @@
         return headers;
       }
     },
+    watch: {
+      value: function (newValue) {
+        if (newValue) {
+          this.loadUploadObject(newValue);
+        }
+        else {
+          this.uploadObj = null;
+        }
+      }
+    },
     mounted: function () {
       if (this.value) {
         this.loadUploadObject(this.value);
