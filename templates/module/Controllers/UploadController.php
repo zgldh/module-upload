@@ -26,13 +26,9 @@ class UploadController extends AppBaseController
      */
     public function index(IndexRequest $request)
     {
-        if ($request->ajax()) {
-            $with = $request->getWith();
-            $data = $this->repository->datatables(null, $with);
-            return $data;
-        } else {
-            return view('$NAME$\Upload::index');
-        }
+        $with = $request->getWith();
+        $data = $this->repository->datatables(null, $with);
+        return $data;
     }
 
     /**
@@ -47,6 +43,8 @@ class UploadController extends AppBaseController
         $input['user_id'] = $request->user()->id;
 
         $upload = $this->repository->create($input);
+        $upload->load($request->getWith());
+
         return $this->sendResponse($upload, 'Upload saved successfully.');
     }
 
@@ -59,8 +57,8 @@ class UploadController extends AppBaseController
      */
     public function show($id, ShowRequest $request)
     {
-        $this->repository->with($request->getWith());
         $upload = $this->repository->findWithoutFail($id);
+        $upload->load($request->getWith());
 
         if (empty($upload)) {
             return $this->sendError('Upload not found');
@@ -87,6 +85,7 @@ class UploadController extends AppBaseController
         $all = $request->all();
 
         $upload = $this->repository->update($all, $id);
+        $upload->load($request->getWith());
 
         return $this->sendResponse($upload, 'Upload updated successfully.');
     }

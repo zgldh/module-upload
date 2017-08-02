@@ -4,9 +4,11 @@ namespace $NAME$\Upload\Requests;
 
 use $NAME$\Upload\Models\Upload;
 use Illuminate\Foundation\Http\FormRequest;
+use zgldh\Scaffold\Traits\HasWithParameter;
 
 class CreateUploadRequest extends FormRequest
 {
+    use HasWithParameter;
 
     /**
      * Determine if the user is authorized to make this request.
