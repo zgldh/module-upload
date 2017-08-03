@@ -147,7 +147,7 @@
     }
 
     .preview {
-      width: 178px;
+      /*width: 178px;*/
       height: 178px;
       display: block;
     }

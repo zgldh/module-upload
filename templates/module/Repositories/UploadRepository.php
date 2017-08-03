@@ -55,7 +55,8 @@ class UploadRepository extends BaseRepository
 
         $upload = $this->find($id);
         $upload->name = @$attributes['name'] ?: $attributes['file']->getClientOriginalName();
-        $upload->description = @$attributes['description'];
+        $upload->description = @$attributes['description'] ?: '';
+        $upload->type = @$attributes['type'] ?: '';
         if (isset($attributes['file'])) {
             $uploadManager = UploadManager::getInstance();
             $uploadManager->withDisk($attributes['disk'])->update($upload, $attributes['file']);

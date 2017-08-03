@@ -157,9 +157,11 @@
               <el-table-column
                       fixed="right"
                       label="操作"
-                      width="120">
+                      width="150">
                 <template scope="scope">
                   <el-button-group>
+                    <el-button @click="onViewClick(scope.row,scope.column,scope.$index,scope.store)" type="default"
+                               size="small" icon="view" title="查看"></el-button>
                     <el-button @click="onEditClick(scope.row,scope.column,scope.$index,scope.store)" type="default"
                                size="small" icon="edit" title="编辑"></el-button>
                     <el-button @click="onDeleteClick(scope.row,scope.column,scope.$index,scope.store)" type="danger"
@@ -205,6 +207,9 @@
       return data;
     },
     methods: {
+      onViewClick: function (row, column, $index, store) {
+        return window.open(row.url);
+      },
       onEditClick: function (row, column, $index, store) {
         return this.$router.push('/upload/' + row.id + '/edit');
       },

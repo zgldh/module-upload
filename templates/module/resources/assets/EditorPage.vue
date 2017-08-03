@@ -48,7 +48,35 @@
             <el-form-item label="Description" prop="description" :error="errors.description">
               <el-input v-model="form.description"></el-input>
             </el-form-item>
-            //TODO file upload
+            <el-form-item label="Type" prop="type" :error="errors.type">
+              <el-input v-model="form.type"></el-input>
+            </el-form-item>
+            <el-form-item label="Disk" v-if="form.id">
+              <el-input v-model="form.disk" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="Path" v-if="form.id">
+              <el-input v-model="form.path" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="Size" v-if="form.id">
+              <el-input v-model="form.size" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item label="File" prop="file" :error="errors.file">
+              <input type="file" class="form-control" id="field-file" v-on:change="onFileChange" name="file">
+              <p class="assist-tip" v-if="form.url">
+                <a :href="form.url" target="_blank"><i class="el-icon-view"></i> {{form.url}}</a>
+              </p>
+            </el-form-item>
+
+            <el-form-item label="User ID" v-if="form.id">
+              <el-input v-model="form.user_id" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="Uploadable ID" v-if="form.id">
+              <el-input v-model="form.uploadable_id" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="Uploadable Type" v-if="form.id">
+              <el-input v-model="form.uploadable_type" disabled></el-input>
+            </el-form-item>
             <el-form-item label="Created At" v-if="form.id">
               <el-input v-model="form.created_at" disabled></el-input>
             </el-form-item>
@@ -68,58 +96,6 @@
     </section>
     <!-- /.content -->
 
-
-    <!-- Main content -->
-    <section class="content">
-
-      <div class="box box-primary">
-        <!--<div class="box-header with-border">-->
-        <!--</div>-->
-        <!-- /.box-header -->
-        <!-- form start -->
-        <div class="box-body">
-
-          <form class="form-horizontal" @submit="onSave">
-
-            <div class="form-group" :class="{'has-error': form.$errors.has('name')}">
-              <label for="field-name" class="col-sm-2 control-label">名字</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="field-name" v-model="form.name">
-                <span class="help-block" v-if="form.$errors.has('name')">{{form.$errors.get('name')}}</span>
-              </div>
-            </div>
-            <div class="form-group" :class="{'has-error': form.$errors.has('description')}">
-              <label for="field-description" class="col-sm-2 control-label">描述</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="field-description" v-model="form.description">
-                <span class="help-block"
-                      v-if="form.$errors.has('description')">{{form.$errors.get('description')}}</span>
-              </div>
-            </div>
-            <div class="form-group" :class="{'has-error': form.$errors.has('file')}">
-              <label for="field-file" class="col-sm-2 control-label">文件</label>
-              <div class="col-sm-10">
-                <input type="file" class="form-control" id="field-file" v-on:change="onFileChange" name="file">
-                <span class="help-block" v-if="form.$errors.has('file')">{{form.$errors.get('file')}}</span>
-              </div>
-            </div>
-
-
-          </form>
-        </div>
-        <!-- /.box-body -->
-
-        <div class="box-footer">
-          <router-link-back class="btn btn-lg btn-flat btn-default pull-left">返回</router-link-back>
-          <button type="submit" form="editing-form" class="btn btn-lg btn-flat btn-primary" @click="onSave"
-                  :disabled="saving">
-            {{saving?"保存中...":"保存"}}
-          </button>
-        </div>
-      </div>
-
-    </section>
-    <!-- /.content -->
   </div>
 </template>
 
@@ -134,6 +110,8 @@
           id: null,
           name: '',
           description: '',
+          type: '',
+          file: null
         }
       };
     },
@@ -170,6 +148,9 @@
       onCancel: function (event) {
         this.$router.back();
       },
+      onFileChange: function (event) {
+        this.form.file = event.target.files[0];
+      }
     }
   };
 </script>
