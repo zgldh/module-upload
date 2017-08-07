@@ -31,15 +31,13 @@ class ModuleInstaller extends BaseInstaller
 
         // Install laravel-permission
         App::register(UploadManagerServiceProvider::class);
-        Artisan::call('vendor:publish', [
-            '--provider' => UploadManagerServiceProvider::class,
-            '--tag'      => 'config']);
+        Artisan::call('vendor:publish', ['--provider' => UploadManagerServiceProvider::class]);
 
         // Update configuration
         $this->updateConfiguration();
 
         // Publish migrations
-        $this->publishMigration('CreateUploadsTable', __DIR__ . '/../migrations/create_uploads_table.php');
+        $this->publishMigration('UpdateUploadsTable', __DIR__ . '/../migrations/update_uploads_table.php');
 
         Artisan::call('migrate');
 
