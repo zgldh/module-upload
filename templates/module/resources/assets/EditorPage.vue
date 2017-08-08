@@ -11,7 +11,7 @@
           <router-link to="/"><i class="fa fa-dashboard"></i> 总览</router-link>
         </li>
         <li>
-          <router-link to="/upload">上传内容管理</router-link>
+          <router-link to="/upload/list">上传内容管理</router-link>
         </li>
         <li class="active" v-if="form.id">编辑上传内容</li>
         <li class="active" v-else>新建上传内容</li>
