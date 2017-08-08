@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "require": {
-    "zgldh/scaffold": "^0.3.4",
+    "zgldh/scaffold": "^0.3.6",
     "zgldh/laravel-upload-manager": "~0.4.3"
   },
   "require-dev": {
