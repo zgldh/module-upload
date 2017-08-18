@@ -24,6 +24,7 @@ class UploadServiceProvider extends \zgldh\ModuleUpload\UploadServiceProvider
     public function boot()
     {
         //
+        parent::boot();
         $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views',
             '$NAME$\Upload');
 
