@@ -1,7 +1,7 @@
 {
   "name": "zgldh/module-upload",
   "description": "Upload Module for zgldh/scaffold",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "keywords": [
     "laravel",
     "scaffold",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "require": {
     "zgldh/scaffold": "^0.3.10",
-    "zgldh/module-action-log": "^0.1.4",
+    "zgldh/module-activity-log": "^0.2.2",
     "zgldh/laravel-upload-manager": "~0.4.3"
   },
   "require-dev": {
