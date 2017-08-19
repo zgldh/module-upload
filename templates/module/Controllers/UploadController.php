@@ -1,7 +1,5 @@
 <?php namespace $NAME$\Upload\Controllers;
 
-use $NAME$\ActionLog\Models\ActionLog;
-use $NAME$\ActionLog\Repositories\ActionLogRepository;
 use $NAME$\Upload\Requests\CreateUploadRequest;
 use $NAME$\Upload\Requests\UpdateUploadRequest;
 use $NAME$\Upload\Repositories\UploadRepository;
@@ -29,7 +27,6 @@ class UploadController extends AppBaseController
     {
         $with = $request->getWith();
         $data = $this->repository->datatables(null, $with);
-        ActionLogRepository::log(ActionLog::TYPE_SEARCH, 'upload');
 
         return $data;
     }
@@ -47,7 +44,6 @@ class UploadController extends AppBaseController
 
         $upload = $this->repository->create($input);
         $upload->load($request->getWith());
-        ActionLogRepository::log(ActionLog::TYPE_CREATE, 'upload');
 
         return $this->sendResponse($upload, 'Upload saved successfully.');
     }
@@ -67,7 +63,6 @@ class UploadController extends AppBaseController
         if (empty($upload)) {
             return $this->sendError('Upload not found');
         }
-        ActionLogRepository::log(ActionLog::TYPE_SHOW, 'upload');
 
         return $this->sendResponse($upload, '');
     }
@@ -91,7 +86,6 @@ class UploadController extends AppBaseController
 
         $upload = $this->repository->update($all, $id);
         $upload->load($request->getWith());
-        ActionLogRepository::log(ActionLog::TYPE_UPDATE, 'upload');
 
         return $this->sendResponse($upload, 'Upload updated successfully.');
     }
@@ -112,7 +106,6 @@ class UploadController extends AppBaseController
         }
 
         $this->repository->delete($id);
-        ActionLogRepository::log(ActionLog::TYPE_DELETE, 'upload');
 
         return $this->sendResponse($upload, 'Upload deleted successfully.');
     }

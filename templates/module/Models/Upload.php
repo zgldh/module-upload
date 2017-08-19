@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use zgldh\UploadManager\UploadManager;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Upload
@@ -10,9 +11,21 @@ use zgldh\UploadManager\UploadManager;
  */
 class Upload extends Model
 {
+    use LogsActivity;
+
     public $table = 'uploads';
 
     public $fillable = [
+        'name',
+        'description',
+        'disk',
+        'path',
+        'size',
+        'type',
+        'user_id',
+    ];
+
+    protected static $logAttributes = [
         'name',
         'description',
         'disk',
