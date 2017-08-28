@@ -28,7 +28,7 @@ class ModuleInstaller extends BaseInstaller
         $this->addRoute('Upload');
         $this->addToVueRoute('Upload');
         $this->addAdminMenuItem($this->getModuleTemplateContent('menu.blade.php'));
-        $this->copyLanguageFiles('module-upload');
+        $this->copyLanguageFiles('module_upload');
 
         // Install laravel-permission
         App::register(UploadManagerServiceProvider::class);

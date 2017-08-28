@@ -29,6 +29,6 @@ class UploadServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadTranslationsFrom(resource_path('lang/vendor/module-upload'), 'module-upload');
+        $this->loadTranslationsFrom(resource_path('lang/vendor/module_upload'), 'module_upload');
     }
 }
