@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'title' => "Upload Files"
+    'title'  => "Upload Files",
+    'models' => [
+        'upload' => [
+            'title' => 'Upload File'
+        ]
+    ]
 ];

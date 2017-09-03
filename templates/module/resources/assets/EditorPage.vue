@@ -2,19 +2,19 @@
   <div class="admin-editor-page">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>上传内容管理
-        <small v-if="form.id">编辑上传内容</small>
-        <small v-else>新建上传内容</small>
+      <h1>{{$t('module_upload.models.upload.title')}}
+        <small v-if="form.id">{{$t('scaffold.terms.edit')}}</small>
+        <small v-else>{{$t('scaffold.terms.create')}}</small>
       </h1>
       <ol class="breadcrumb">
         <li>
-          <router-link to="/"><i class="fa fa-dashboard"></i> 总览</router-link>
+          <router-link to="/"><i class="fa fa-dashboard"></i> {{$t('module_dashboard.title')}}</router-link>
         </li>
         <li>
-          <router-link to="/upload/list">上传内容管理</router-link>
+          <router-link to="/upload/list">{{$t('module_upload.models.upload.title')}}</router-link>
         </li>
-        <li class="active" v-if="form.id">编辑上传内容</li>
-        <li class="active" v-else>新建上传内容</li>
+        <li class="active" v-if="form.id">{{$t('scaffold.terms.edit')}}</li>
+        <li class="active" v-else>{{$t('scaffold.terms.create')}}</li>
       </ol>
     </section>
 
@@ -24,9 +24,9 @@
       <div class="box box-default">
 
         <div class="box-header with-border">
-          <el-button type="default" @click="onCancel" icon="close">返回</el-button>
+          <el-button type="default" @click="onCancel" icon="close">{{$t('scaffold.terms.back')}}</el-button>
           <el-button type="primary" @click="onSave" icon="check" :loading="saving||loading">
-            保存
+            {{$t('scaffold.terms.save')}}
           </el-button>
         </div>
         <!-- /.box-header -->
@@ -85,9 +85,9 @@
         <!-- /.box-body -->
 
         <div class="box-footer">
-          <el-button type="default" @click="onCancel" icon="close">返回</el-button>
+          <el-button type="default" @click="onCancel" icon="close">{{$t('scaffold.terms.back')}}</el-button>
           <el-button type="primary" @click="onSave" icon="check" :loading="saving||loading">
-            保存
+            {{$t('scaffold.terms.save')}}
           </el-button>
         </div>
 
@@ -100,10 +100,14 @@
 </template>
 
 <script type="javascript">
-  import {mixin} from "resources/assets/js/commons/EditorHelper.js";
+  import { mixin } from "resources/assets/js/commons/EditorHelper.js";
+  import { loadModuleLanguage } from 'resources/assets/js/commons/LanguageHelper';
 
   export default  {
-    mixins: [mixin],
+    mixins: [
+      mixin,
+      loadModuleLanguage('module_upload')
+    ],
     data: function () {
       return {
         form: {
