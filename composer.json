@@ -1,7 +1,7 @@
 {
   "name": "zgldh/module-upload",
   "description": "Upload Module for zgldh/scaffold",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "keywords": [
     "laravel",
     "scaffold",
@@ -32,6 +32,7 @@
     "post-create-project-cmd": [
     ],
     "post-install-cmd": [
+      "@php artisan zgldh:module:install zgldh/module-upload"
     ],
     "post-update-cmd": [
     ]
