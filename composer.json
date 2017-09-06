@@ -32,7 +32,6 @@
     "post-create-project-cmd": [
     ],
     "post-install-cmd": [
-      "@php artisan zgldh:module:install zgldh/module-upload"
     ],
     "post-update-cmd": [
     ]
