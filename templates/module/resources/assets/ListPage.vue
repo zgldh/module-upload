@@ -30,20 +30,20 @@
         <div class="box-body datatable-loading-section">
           <div class="search">
             <el-form :inline="true" :model="searchForm" ref="searchForm">
-              <el-form-item label="Name">
-                <el-input v-model="searchForm.name" placeholder="Name" column="name" operator="like"></el-input>
+              <el-form-item :label="$t('module_upload.models.upload.fields.name')">
+                <el-input v-model="searchForm.name" column="name" operator="like"></el-input>
               </el-form-item>
-              <el-form-item label="Description">
-                <el-input v-model="searchForm.description" placeholder="Description" column="description"
+              <el-form-item :label="$t('module_upload.models.upload.fields.description')">
+                <el-input v-model="searchForm.description" column="description"
                           operator="like"></el-input>
               </el-form-item>
-              <el-form-item label="Type">
-                <el-input v-model="searchForm.type" placeholder="Type" column="type" operator="like"></el-input>
+              <el-form-item :label="$t('module_upload.models.upload.fields.type')">
+                <el-input v-model="searchForm.type" column="type" operator="like"></el-input>
               </el-form-item>
-              <el-form-item label="Disk">
-                <el-input v-model="searchForm.disk" placeholder="Disk" column="disk" operator="like"></el-input>
+              <el-form-item :label="$t('module_upload.models.upload.fields.disk')">
+                <el-input v-model="searchForm.disk" column="disk" operator="like"></el-input>
               </el-form-item>
-              <el-form-item label="Created At">
+              <el-form-item :label="$t('scaffold.fields.created_at')">
                 <el-date-picker
                         v-model="searchForm.created_at"
                         type="daterange"
@@ -117,38 +117,38 @@
               </el-table-column>
               <el-table-column
                       prop="name"
-                      label="Name"
+                      :label="$t('module_upload.models.upload.fields.name')"
                       sortable="custom"
                       show-overflow-tooltip
                       width="180">
               </el-table-column>
               <el-table-column
                       prop="description"
-                      label="Description"
+                      :label="$t('module_upload.models.upload.fields.description')"
                       sortable="custom"
                       show-overflow-tooltip>
               </el-table-column>
               <el-table-column
                       prop="type"
-                      label="Type"
+                      :label="$t('module_upload.models.upload.fields.type')"
                       sortable="custom"
                       show-overflow-tooltip>
               </el-table-column>
               <el-table-column
                       prop="disk"
-                      label="Disk"
+                      :label="$t('module_upload.models.upload.fields.disk')"
                       sortable="custom"
                       show-overflow-tooltip>
               </el-table-column>
               <el-table-column
                       prop="size"
-                      label="Size"
+                      :label="$t('module_upload.models.upload.fields.size')"
                       sortable="custom"
                       show-overflow-tooltip>
               </el-table-column>
               <el-table-column
                       prop="created_at"
-                      label="Created At"
+                      :label="$t('scaffold.fields.created_at')"
                       sortable="custom"
                       searchable="false"
                       show-overflow-tooltip>
@@ -186,8 +186,8 @@
 </template>
 
 <script type="javascript">
-  import { mixin } from "resources/assets/js/commons/ListHelpers.js";
-  import { loadModuleLanguage } from 'resources/assets/js/commons/LanguageHelper';
+  import {mixin} from "resources/assets/js/commons/ListHelpers.js";
+  import {loadModuleLanguage} from 'resources/assets/js/commons/LanguageHelper';
 
   export default {
     mixins: [
@@ -228,7 +228,7 @@
         });
       },
       onBundleDelete: function () {
-        return this.$confirm(this.$i18n.tc('scaffold.delete_confirm.bundle_confirm_text', this.selectedItems.length, {count:this.selectedItems.length}),
+        return this.$confirm(this.$i18n.tc('scaffold.delete_confirm.bundle_confirm_text', this.selectedItems.length, {count: this.selectedItems.length}),
                 this.$i18n.t('scaffold.terms.alert'), {
                   confirmButtonText: this.$i18n.t('scaffold.terms.confirm'),
                   cancelButtonText: this.$i18n.t('scaffold.terms.cancel'),

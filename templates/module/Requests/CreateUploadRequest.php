@@ -20,7 +20,7 @@ class CreateUploadRequest extends FormRequest
         return true;
     }
 
-    public function all()
+    public function all($keys = null)
     {
         $data = parent::all();
         if (!array_get($data, 'disk')) {
@@ -39,5 +39,10 @@ class CreateUploadRequest extends FormRequest
         $rules = Upload::$rules;
         $rules['file'] = 'required';
         return $rules;
+    }
+
+    public function attributes()
+    {
+        return __('module_upload::t.models.upload.fields');
     }
 }

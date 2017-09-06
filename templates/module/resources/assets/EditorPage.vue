@@ -39,45 +39,46 @@
 
           <!-- form start -->
           <el-form ref="form" :model="form" label-width="200px" v-loading="loading">
-            <el-form-item label="ID" v-if="form.id">
+            <el-form-item :label="$t('scaffold.fields.id')" v-if="form.id">
               <el-input v-model="form.id" disabled></el-input>
             </el-form-item>
-            <el-form-item label="Name" prop="name" :error="errors.name">
+            <el-form-item :label="$t('module_upload.models.upload.fields.name')" prop="name" :error="errors.name">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="Description" prop="description" :error="errors.description">
+            <el-form-item :label="$t('module_upload.models.upload.fields.description')" prop="description"
+                          :error="errors.description">
               <el-input v-model="form.description"></el-input>
             </el-form-item>
-            <el-form-item label="Type" prop="type" :error="errors.type">
+            <el-form-item :label="$t('module_upload.models.upload.fields.type')" prop="type" :error="errors.type">
               <el-input v-model="form.type"></el-input>
             </el-form-item>
-            <el-form-item label="Disk" v-if="form.id">
+            <el-form-item :label="$t('module_upload.models.upload.fields.disk')" v-if="form.id">
               <el-input v-model="form.disk" disabled></el-input>
             </el-form-item>
-            <el-form-item label="Path" v-if="form.id">
+            <el-form-item :label="$t('module_upload.models.upload.fields.path')" v-if="form.id">
               <el-input v-model="form.path" disabled></el-input>
             </el-form-item>
-            <el-form-item label="Size" v-if="form.id">
+            <el-form-item :label="$t('module_upload.models.upload.fields.size')" v-if="form.id">
               <el-input v-model="form.size" disabled></el-input>
             </el-form-item>
 
-            <el-form-item label="File" prop="file" :error="errors.file">
+            <el-form-item :label="$t('module_upload.models.upload.fields.file')" prop="file" :error="errors.file">
               <input type="file" class="form-control" id="field-file" v-on:change="onFileChange" name="file">
               <p class="assist-tip" v-if="form.url">
                 <a :href="form.url" target="_blank"><i class="el-icon-view"></i> {{form.url}}</a>
               </p>
             </el-form-item>
 
-            <el-form-item label="User ID" v-if="form.id">
+            <el-form-item :label="$t('module_upload.models.upload.fields.user_id')" v-if="form.id">
               <el-input v-model="form.user_id" disabled></el-input>
             </el-form-item>
-            <el-form-item label="Uploadable ID" v-if="form.id">
+            <el-form-item :label="$t('module_upload.models.upload.fields.uploadable_id')" v-if="form.id">
               <el-input v-model="form.uploadable_id" disabled></el-input>
             </el-form-item>
-            <el-form-item label="Uploadable Type" v-if="form.id">
+            <el-form-item :label="$t('module_upload.models.upload.fields.uploadable_type')" v-if="form.id">
               <el-input v-model="form.uploadable_type" disabled></el-input>
             </el-form-item>
-            <el-form-item label="Created At" v-if="form.id">
+            <el-form-item :label="$t('scaffold.fields.created_at')" v-if="form.id">
               <el-input v-model="form.created_at" disabled></el-input>
             </el-form-item>
           </el-form>
@@ -100,8 +101,8 @@
 </template>
 
 <script type="javascript">
-  import { mixin } from "resources/assets/js/commons/EditorHelper.js";
-  import { loadModuleLanguage } from 'resources/assets/js/commons/LanguageHelper';
+  import {mixin} from "resources/assets/js/commons/EditorHelper.js";
+  import {loadModuleLanguage} from 'resources/assets/js/commons/LanguageHelper';
 
   export default  {
     mixins: [

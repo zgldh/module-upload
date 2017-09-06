@@ -20,7 +20,7 @@ class UpdateUploadRequest extends FormRequest
         return true;
     }
 
-    public function all()
+    public function all($keys = null)
     {
         $data = parent::all();
         if (!array_get($data, 'disk')) {
@@ -37,5 +37,10 @@ class UpdateUploadRequest extends FormRequest
     public function rules()
     {
         return Upload::$rules;
+    }
+
+    public function attributes()
+    {
+        return __('module_upload::t.models.upload.fields');
     }
 }
