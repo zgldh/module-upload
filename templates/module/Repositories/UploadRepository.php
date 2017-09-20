@@ -6,6 +6,7 @@ use $NAME$\Upload\Models\Upload;
 use zgldh\Scaffold\BaseRepository;
 use zgldh\UploadManager\UploadException;
 use zgldh\UploadManager\UploadManager;
+use Illuminate\Container\Container as Application;
 
 class UploadRepository extends BaseRepository
 {
@@ -24,6 +25,19 @@ class UploadRepository extends BaseRepository
     public function model()
     {
         return Upload::class;
+    }
+
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+        $user = \Auth::user();
+        if ($user) {
+            $this->scopeQuery(function ($query) use ($user) {
+                if (!$user->isAdmin()) {
+                    $query->where('user_id', $user->id);
+                }
+            });
+        }
     }
 
     public function create(array $attributes)
@@ -64,5 +78,14 @@ class UploadRepository extends BaseRepository
         $upload->save();
 
         return $upload;
+    }
+
+    public function cleanUpUpload($userId)
+    {
+        $query = call_user_func($this->model() . '::query');
+        $uploads = $query->where('user_id', $userId)->whereNull('uploadable_id')->get();
+        foreach ($uploads as $upload) {
+            $upload->delete();
+        }
     }
 }

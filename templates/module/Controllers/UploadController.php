@@ -57,7 +57,7 @@ class UploadController extends AppBaseController
      */
     public function show($id, ShowRequest $request)
     {
-        $upload = $this->repository->findWithoutFail($id);
+        $upload = $this->repository->find($id);
         $upload->load($request->getWith());
 
         if (empty($upload)) {
@@ -77,7 +77,7 @@ class UploadController extends AppBaseController
      */
     public function update($id, UpdateUploadRequest $request)
     {
-        $upload = $this->repository->findWithoutFail($id);
+        $upload = $this->repository->find($id);
 
         if (empty($upload)) {
             return $this->sendError('Upload not found');
@@ -99,7 +99,7 @@ class UploadController extends AppBaseController
      */
     public function destroy($id)
     {
-        $upload = $this->repository->findWithoutFail($id);
+        $upload = $this->repository->find($id);
 
         if (empty($upload)) {
             return $this->sendError('Upload not found');
