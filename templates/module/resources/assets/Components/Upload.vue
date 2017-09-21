@@ -4,7 +4,7 @@
              with-credentials
              name="file"
              :accept="accept"
-             :multiple="false"
+             :multiple="multiple"
              :headers="headers"
              :data="data"
              :action="action"
@@ -22,11 +22,12 @@
 </template>
 
 <script type="javascript">
-  import { getXsrfToken } from 'resources/assets/js/commons/Utils.js';
+  import {getXsrfToken} from 'resources/assets/js/commons/Utils.js';
 
   export default {
     props: {
       'value': {
+        type: [Object, Array],
         required: true
       },
       'data': {
@@ -51,7 +52,12 @@
         type: Number,
         default: 2,
         required: false
-      }
+      },
+      'multiple': {
+        type: Boolean,
+        default: false,
+        required: false
+      },
     },
     data() {
       return {
@@ -72,7 +78,12 @@
     watch: {
       value: function (newValue, oldValue) {
         if (newValue) {
-          this.fileList = [this.value];
+          if (this.multiple) {
+            this.fileList = this.value;
+          }
+          else {
+            this.fileList = [this.value];
+          }
         }
         else {
           this.fileList = [];
@@ -81,7 +92,12 @@
     },
     mounted: function () {
       if (this.value) {
-        this.fileList = [this.value];
+        if (this.multiple) {
+          this.fileList = this.value;
+        }
+        else {
+          this.fileList = [this.value];
+        }
       }
     },
     methods: {
@@ -91,8 +107,14 @@
         window.open(url, '_blank');
       },
       handleSuccess(res, file, fileList) {
-        this.fileList = [res.data];
-        this.$emit('input', res.data);
+        if (this.multiple) {
+          this.fileList.push(res.data);
+          this.$emit('input', this.fileList);
+        }
+        else {
+          this.fileList = [res.data];
+          this.$emit('input', res.data);
+        }
         this.loading = false;
       },
       handleError(res, file, fileList) {
@@ -101,8 +123,20 @@
         this.loading = false;
       },
       handleRemove(file, fileList) {
+        var vm = this;
         return axios.post('/upload/' + file.id, {_method: 'delete'}).then(result => {
           if (result.status == 200) {
+            if (vm.multiple) {
+              var fileIndex = vm.fileList.findIndex(item => {
+                return item.id == result.data.data.id;
+              });
+              vm.fileList.splice(fileIndex, 1);
+              this.$emit('input', vm.fileList);
+            }
+            else {
+              vm.fileList = [];
+              this.$emit('input', null);
+            }
             return true;
           }
           else {
