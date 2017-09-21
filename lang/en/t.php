@@ -18,5 +18,9 @@ return [
                 'file'            => 'File',
             ]
         ]
+    ],
+    'terms'  => [
+        'upload_button' => 'Upload',
+        'max_size'      => 'File size should be less than {count} MB'
     ]
 ];

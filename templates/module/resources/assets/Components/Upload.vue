@@ -15,19 +15,23 @@
              :on-error="handleError"
              :on-remove="handleRemove"
              :before-upload="beforeUpload">
-    <el-button size="small" type="primary">点击上传</el-button>
-    <span v-if="maxSize" slot="tip" class="el-upload__tip">上传文件不能超过500kb</span>
+    <el-button size="small" type="primary"><i class="icon-cloud-upload"></i>
+      {{$t('module_upload.terms.upload_button')}}
+    </el-button>
+    <span v-if="maxSize" slot="tip" class="el-upload__tip">
+      {{$t('module_upload.terms.max_size',{count:maxSize})}}
+    </span>
     <span class="upload-component--error" v-if="error">{{error}}</span>
   </el-upload>
 </template>
 
 <script type="javascript">
   import {getXsrfToken} from 'resources/assets/js/commons/Utils.js';
+  import {loadLanguages} from 'resources/assets/js/commons/LanguageHelper';
 
   export default {
     props: {
       'value': {
-        type: [Object, Array],
         required: true
       },
       'data': {
@@ -90,6 +94,11 @@
         }
       }
     },
+    created: function () {
+      loadLanguages('module_upload').then(() => {
+        this.$forceUpdate();
+      })
+    },
     mounted: function () {
       if (this.value) {
         if (this.multiple) {
@@ -102,7 +111,6 @@
     },
     methods: {
       handlePreview(file) {
-        console.log('handlePreview', file);
         var url = file.url;
         window.open(url, '_blank');
       },
@@ -147,7 +155,7 @@
       beforeUpload(file) {
         const isLt2M = file.size / 1024 / 1024 < this.maxSize;
         if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 ' + this.maxSize + 'MB!');
+          this.$message.error($t('module_upload.terms.max_size', {count: this.maxSize}));
         }
         let result = isLt2M;
         if (result) {
@@ -157,6 +165,7 @@
       }
     }
   }
+
 </script>
 
 <style lang="scss">

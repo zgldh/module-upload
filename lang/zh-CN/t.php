@@ -18,5 +18,9 @@ return [
                 'file'            => '文件',
             ]
         ]
+    ],
+    'terms'  => [
+        'upload_button' => '点击上传',
+        'max_size'      => '文件应当小于 {count} MB'
     ]
 ];
