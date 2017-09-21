@@ -10,6 +10,7 @@
              :action="action"
              :show-file-list="true"
              :file-list="fileList"
+             :list-type="listType"
              :on-preview="handlePreview"
              :on-success="handleSuccess"
              :on-error="handleError"
@@ -18,9 +19,12 @@
     <el-button size="small" type="primary"><i class="icon-cloud-upload"></i>
       {{$t('module_upload.terms.upload_button')}}
     </el-button>
-    <span v-if="maxSize" slot="tip" class="el-upload__tip">
+    <span v-if="maxSize && listType!='picture-card'" slot="tip" class="el-upload__tip">
       {{$t('module_upload.terms.max_size',{count:maxSize})}}
     </span>
+    <div v-else-if="maxSize" slot="tip" class="el-upload__tip">
+      {{$t('module_upload.terms.max_size',{count:maxSize})}}
+    </div>
     <span class="upload-component--error" v-if="error">{{error}}</span>
   </el-upload>
 </template>
@@ -46,6 +50,11 @@
         default: '/upload',
         required: false
       },
+      'listType': {
+        type: String,
+        default: 'text', //text | picture | picture-card
+        required: false
+      },
       'accept': {
         type: String,
         default: '*/*',
@@ -67,7 +76,8 @@
       return {
         fileList: [],
         error: '',
-        loading: false
+        loading: false,
+        uploadingCount: 0
       };
     },
     computed: {
@@ -83,7 +93,9 @@
       value: function (newValue, oldValue) {
         if (newValue) {
           if (this.multiple) {
-            this.fileList = this.value;
+            if (this.uploadingCount === 0) {
+              this.fileList = JSON.parse(JSON.stringify(this.value));
+            }
           }
           else {
             this.fileList = [this.value];
@@ -102,7 +114,7 @@
     mounted: function () {
       if (this.value) {
         if (this.multiple) {
-          this.fileList = this.value;
+          this.fileList = JSON.parse(JSON.stringify(this.value));
         }
         else {
           this.fileList = [this.value];
@@ -115,9 +127,12 @@
         window.open(url, '_blank');
       },
       handleSuccess(res, file, fileList) {
+        this.uploadingCount--;
         if (this.multiple) {
-          this.fileList.push(res.data);
-          this.$emit('input', this.fileList);
+          this.fileList = fileList;
+          if (this.uploadingCount === 0) {
+            this.$emit('input', this.fileList.map(item => item.hasOwnProperty('response') ? item.response.data : item));
+          }
         }
         else {
           this.fileList = [res.data];
@@ -160,12 +175,12 @@
         let result = isLt2M;
         if (result) {
           this.loading = true;
+          this.uploadingCount++;
         }
         return result;
       }
     }
-  }
-
+  };
 </script>
 
 <style lang="scss">
