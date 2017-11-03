@@ -16,16 +16,17 @@
              :on-error="handleError"
              :on-remove="handleRemove"
              :before-upload="beforeUpload">
-    <el-button size="small" type="primary" :disabled="buttonDisabled">
-      <i :class="icon"></i>
+    <el-button size="small" type="primary" :disabled="disabled"><i class="icon-paper-clip"></i>
       {{$t('module_upload.terms.upload_button')}}
     </el-button>
-    <span v-if="maxSize && listType!='picture-card'" slot="tip" class="el-upload__tip">
-      {{$t('module_upload.terms.max_size',{count:maxSize})}}
+    <span slot="tip" class="el-upload__tip">
+      <span v-if="maxSize">
+      {{$t('module_upload.terms.max_size',{count:maxSize})}}.
+      </span>
+      <span v-if="maxLength">
+        {{$t('module_upload.terms.max_length',{count:maxLength})}}.
+      </span>
     </span>
-    <div v-else-if="maxSize" slot="tip" class="el-upload__tip">
-      {{$t('module_upload.terms.max_size',{count:maxSize})}}
-    </div>
     <span class="upload-component--error" v-if="error">{{error}}</span>
   </el-upload>
 </template>
@@ -44,11 +45,6 @@
         default: function () {
           return {}
         },
-        required: false
-      },
-      'icon': {
-        type: String,
-        default: 'icon-cloud-upload',
         required: false
       },
       'action': {
@@ -88,7 +84,8 @@
         fileList: [],
         error: '',
         loading: false,
-        uploadingCount: 0
+        uploadingCount: 0,
+        disabled: false
       };
     },
     computed: {
@@ -98,13 +95,6 @@
           'X-XSRF-TOKEN': getXsrfToken()
         };
         return headers;
-      },
-      buttonDisabled: function(){
-        if(this.fileList.length >= this.maxLength && this.maxLength > 0){
-          return true;
-        }else {
-          return false;
-        }
       }
     },
     watch: {
@@ -123,6 +113,14 @@
           this.fileList = [];
         }
       },
+      fileList: function (newValue) {
+        if (newValue.length >= this.maxLength && this.maxLength > 0) {
+          this.disabled = true;
+        } else {
+          this.disabled = false;
+        }
+      }
+    },
     created: function () {
       loadLanguages('module_upload').then(() => {
         this.$forceUpdate();
@@ -186,7 +184,7 @@
         });
       },
       beforeUpload(file) {
-        if(this.fileList.length + this.uploadingCount >= this.maxLength && this.maxLength >0){
+        if (this.fileList.length + this.uploadingCount >= this.maxLength && this.maxLength > 0) {
           return false;
         }
         const isLt2M = file.size / 1024 / 1024 < this.maxSize;
@@ -206,44 +204,8 @@
 
 <style lang="scss">
   .upload-component {
-    input[type="file"] {
-      display: none;
-    }
-    .upload-error {
-      color: #FF4949;
-      position: absolute;
-      left: 10px;
-      top: 0;
-    }
-    .el-upload {
-      border: 1px dashed #d9d9d9;
-      border-radius: 6px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      &:hover {
-        border-color: #20a0ff;
-      }
-    }
-
-    .uploader-icon {
-      font-size: 28px;
-      color: #8c939d;
-      width: 178px;
-      height: 178px;
-      line-height: 178px;
-      text-align: center;
-    }
-
-    .preview {
-      /*width: 178px;*/
-      height: 178px;
-      display: block;
-    }
-
     img.el-upload-list__item-thumbnail {
       width: auto;
     }
   }
-
 </style>
