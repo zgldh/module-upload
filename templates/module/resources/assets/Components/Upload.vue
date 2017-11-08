@@ -16,7 +16,8 @@
              :on-error="handleError"
              :on-remove="handleRemove"
              :before-upload="beforeUpload">
-    <el-button size="small" type="primary"><i class="icon-cloud-upload"></i>
+    <el-button size="small" type="primary" :disabled="buttonDisabled">
+      <i :class="icon"></i>
       {{$t('module_upload.terms.upload_button')}}
     </el-button>
     <span v-if="maxSize && listType!='picture-card'" slot="tip" class="el-upload__tip">
@@ -30,8 +31,8 @@
 </template>
 
 <script type="javascript">
-  import {getXsrfToken} from 'resources/assets/js/commons/Utils.js';
-  import {loadLanguages} from 'resources/assets/js/commons/LanguageHelper';
+  import { getXsrfToken } from 'resources/assets/js/commons/Utils.js';
+  import { loadLanguages } from 'resources/assets/js/commons/LanguageHelper';
 
   export default {
     props: {
@@ -43,6 +44,11 @@
         default: function () {
           return {}
         },
+        required: false
+      },
+      'icon': {
+        type: String,
+        default: 'icon-cloud-upload',
         required: false
       },
       'action': {
@@ -66,6 +72,11 @@
         default: 2,
         required: false
       },
+      'maxLength': {
+        type: Number,
+        default: 0,
+        required: false
+      },
       'multiple': {
         type: Boolean,
         default: false,
@@ -87,6 +98,13 @@
           'X-XSRF-TOKEN': getXsrfToken()
         };
         return headers;
+      },
+      buttonDisabled: function () {
+        if (this.fileList.length >= this.maxLength && this.maxLength > 0) {
+          return true;
+        } else {
+          return false;
+        }
       }
     },
     watch: {
@@ -104,7 +122,7 @@
         else {
           this.fileList = [];
         }
-      }
+      },
     },
     created: function () {
       loadLanguages('module_upload').then(() => {
@@ -120,6 +138,7 @@
           this.fileList = [this.value];
         }
       }
+
     },
     methods: {
       handlePreview(file) {
@@ -168,6 +187,9 @@
         });
       },
       beforeUpload(file) {
+        if (this.fileList.length + this.uploadingCount >= this.maxLength && this.maxLength > 0) {
+          return false;
+        }
         const isLt2M = file.size / 1024 / 1024 < this.maxSize;
         if (!isLt2M) {
           this.$message.error($t('module_upload.terms.max_size', {count: this.maxSize}));
@@ -184,7 +206,7 @@
 </script>
 
 <style lang="scss">
-  .single-image-upload-component {
+  .upload-component {
     input[type="file"] {
       display: none;
     }
@@ -218,6 +240,10 @@
       /*width: 178px;*/
       height: 178px;
       display: block;
+    }
+
+    img.el-upload-list__item-thumbnail {
+      width: auto;
     }
   }
 
