@@ -157,7 +157,7 @@
                       fixed="right"
                       :label="$t('scaffold.terms.actions')"
                       width="150">
-                <template scope="scope">
+                <template slot-scope="scope">
                   <el-button-group>
                     <el-button @click="onViewClick(scope.row,scope.column,scope.$index,scope.store)" type="default"
                                size="small" icon="view" :title="$t('scaffold.terms.view')"></el-button>
